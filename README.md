@@ -1,0 +1,2 @@
+- Run project using go run main.go command
+- All the configurations and external api base url are located in .env file. Please change GET_CARS_HOST variable value from http://localhost:2020 to what is needed before the path /info. For example, if the full path is https://example.com/cars/info, change the value to https://example.com/cars
