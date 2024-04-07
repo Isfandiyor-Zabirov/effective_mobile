@@ -1,0 +1,192 @@
+consumes:
+- application/json
+definitions:
+  cars.AddCarsRequest:
+    properties:
+      regNums:
+        items:
+          type: string
+        type: array
+    type: object
+  cars.Car:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      mark:
+        type: string
+      model:
+        type: string
+      owner_id:
+        type: integer
+      regNum:
+        type: string
+      updated_at:
+        type: string
+      year:
+        type: integer
+    type: object
+  cars.GetCarsResponse:
+    properties:
+      cars:
+        items:
+          $ref: '#/definitions/cars.Response'
+        type: array
+      page:
+        type: integer
+      pages:
+        type: integer
+      total_quantity:
+        type: integer
+    type: object
+  cars.Response:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        type: string
+      ownerID:
+        type: integer
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+info:
+  contact:
+    email: isfand.zabirov@gmail.com
+    name: Isfandiyor
+  description: Документация к сервису Tech project.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API документация
+  version: 1.0.0
+paths:
+  /api/v1/cars:
+    delete:
+      operationId: delete-cars
+      parameters:
+      - description: ID машины
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted
+          schema:
+            type: string
+        "400":
+          description: Something went wrong
+          schema:
+            type: string
+      summary: Удаление машины из базы по идентификатору (ID)
+      tags:
+      - Машины
+    get:
+      operationId: get-cars
+      parameters:
+      - description: Госномер машины
+        in: query
+        name: regNum
+        type: string
+      - description: Марка машины
+        in: query
+        name: mark
+        type: string
+      - description: Модел машины
+        in: query
+        name: model
+        type: string
+      - description: Год производства машины
+        in: query
+        name: year
+        type: integer
+      - description: ID владельца машины
+        in: query
+        name: ownerID
+        type: integer
+      - description: Страница
+        in: query
+        name: page
+        type: integer
+      - description: Количество рядов на странице(для пагинации)
+        in: query
+        name: page_limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cars.GetCarsResponse'
+        "400":
+          description: Something went wrong
+          schema:
+            type: string
+      summary: Получение данных машин по фильтру с пагинацией и фильтрацией.
+      tags:
+      - Машины
+    post:
+      operationId: create-cars
+      parameters:
+      - description: Госномера машин
+        in: body
+        name: id
+        required: true
+        schema:
+          $ref: '#/definitions/cars.AddCarsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Create successful
+          schema:
+            type: string
+        "400":
+          description: Something went wrong
+          schema:
+            type: string
+      summary: Сохранение машины в базу по госномеру
+      tags:
+      - Машины
+    put:
+      operationId: update-cars
+      parameters:
+      - description: Данные машины
+        in: body
+        name: id
+        required: true
+        schema:
+          $ref: '#/definitions/cars.Car'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Update successful
+          schema:
+            type: string
+        "400":
+          description: Something went wrong
+          schema:
+            type: string
+      summary: Обновление данных машины в базе
+      tags:
+      - Машины
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
